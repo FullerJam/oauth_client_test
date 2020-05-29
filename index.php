@@ -43,10 +43,11 @@ elseif (empty($_GET['state']) || (isset($_SESSION['state']) && $_GET['state'] !=
     exit('Invalid state');
 } else {
 
-    ?>
+?>
 <!DOCTYPE html>
 <html>
 <head>
+<title>Oauth demo client</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <style>
 
@@ -101,12 +102,11 @@ try {
             $accessToken
         );
 
-        echo "<h4 class='mt-2' style='color:green;'>Making a request to the Resource server API</h4><br/><p>Request: {" . (string) $request->getBody() . "}</p>";
+        echo "<h4 class='mt-2' style='color:green;'>Making a request to the Resource server API</h4><br/>";
         $client = new GuzzleHttp\Client();
-        $response = json_decode((string) $client->send($request)->getBody());
-        echo "Response " . (string) $client->send($request)->getBody();//this showed error in full, previously truncated in catch.. access token was being denied.
-        var_dump($response);
-        echo "User email from API: {$response->email}";
+        echo "Response from resource server <br/><span style='color:green;'>" . (string) $client->send($request)->getBody()."</span>";//this showed error in full, previously truncated in catch.. access token was being denied by resource server.
+        // var_dump($response);
+        // echo "User email from API: {$response->email}";
         // echo "Response from API: {$response->msg}";
 
     } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
